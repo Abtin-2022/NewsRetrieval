@@ -1,8 +1,9 @@
 import os
+import git
 from dotenv import load_dotenv
 #from flask_debugtoolbar import DebugToolbarExtension
 from flask_behind_proxy import FlaskBehindProxy
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request
 from forms import RegistrationForm
 app = Flask(__name__)
 proxied = FlaskBehindProxy(app)  ## add this line
@@ -16,6 +17,19 @@ app.debug = True
 @app.route("/home")
 def home():
     return render_template('home.html', subtitle='Home Page', text= 'Welcome to NewsLink!')
+
+@app.route("/update_server", methods=['POST'])
+def webhook():
+    if request.method == 'POST':
+        repo = git.Repo('/home/NewsRetrieval/NewsRetrieval')
+        origin = repo.remotes.origin
+        origin.pull()
+        return 'Updated PythonAnywhere successfully', 200
+    else:
+        return 'Wrong event type', 400
+
+
+
 
 
 @app.route("/register", methods=['GET', 'POST'])
