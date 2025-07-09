@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask_debugtoolbar import DebugToolbarExtension
+#from flask_debugtoolbar import DebugToolbarExtension
 from flask_behind_proxy import FlaskBehindProxy
 from flask import Flask, render_template, url_for, flash, redirect
 from forms import RegistrationForm
@@ -10,7 +10,7 @@ load_dotenv() # load from our .env file
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') # here we get our key stored in our .env file!
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS']= False # this is so that we don't get a debug confirmation message during url redirects
 app.debug = True
-toolbar = DebugToolbarExtension(app)
+#toolbar = DebugToolbarExtension(app)
 
 @app.route("/")
 @app.route("/home")
